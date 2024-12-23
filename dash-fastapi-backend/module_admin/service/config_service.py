@@ -7,7 +7,8 @@ from exceptions.exception import ServiceException
 from module_admin.dao.config_dao import ConfigDao
 from module_admin.entity.vo.common_vo import CrudResponseModel
 from module_admin.entity.vo.config_vo import ConfigModel, ConfigPageQueryModel, DeleteConfigModel
-from utils.common_util import export_list2excel, SqlalchemyUtil
+from utils.common_util import SqlalchemyUtil
+from utils.excel_util import ExcelUtil
 
 
 class ConfigService:
@@ -207,17 +208,12 @@ class ConfigService:
             'remark': '备注',
         }
 
-        data = config_list
-
-        for item in data:
+        for item in config_list:
             if item.get('config_type') == 'Y':
                 item['config_type'] = '是'
             else:
                 item['config_type'] = '否'
-        new_data = [
-            {mapping_dict.get(key): value for key, value in item.items() if mapping_dict.get(key)} for item in data
-        ]
-        binary_data = export_list2excel(new_data)
+        binary_data = ExcelUtil.export_list2excel(config_list, mapping_dict)
 
         return binary_data
 

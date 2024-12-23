@@ -15,7 +15,8 @@ from module_admin.entity.vo.dict_vo import (
     DictTypeModel,
     DictTypePageQueryModel,
 )
-from utils.common_util import export_list2excel, SqlalchemyUtil
+from utils.common_util import SqlalchemyUtil
+from utils.excel_util import ExcelUtil
 
 
 class DictTypeService:
@@ -192,17 +193,12 @@ class DictTypeService:
             'remark': '备注',
         }
 
-        data = dict_type_list
-
-        for item in data:
+        for item in dict_type_list:
             if item.get('status') == '0':
                 item['status'] = '正常'
             else:
                 item['status'] = '停用'
-        new_data = [
-            {mapping_dict.get(key): value for key, value in item.items() if mapping_dict.get(key)} for item in data
-        ]
-        binary_data = export_list2excel(new_data)
+        binary_data = ExcelUtil.export_list2excel(dict_type_list, mapping_dict)
 
         return binary_data
 
@@ -331,9 +327,7 @@ class DictDataService:
                 dict_data_list = await cls.query_dict_data_list_services(query_db, page_object.dict_type)
                 await request.app.state.redis.set(
                     f'{RedisInitKeyConfig.SYS_DICT.key}:{page_object.dict_type}',
-                    json.dumps(
-                        SqlalchemyUtil.serialize_result(dict_data_list), ensure_ascii=False, default=str
-                    ),
+                    json.dumps(SqlalchemyUtil.serialize_result(dict_data_list), ensure_ascii=False, default=str),
                 )
                 return CrudResponseModel(is_success=True, message='新增成功')
             except Exception as e:
@@ -364,9 +358,7 @@ class DictDataService:
                     dict_data_list = await cls.query_dict_data_list_services(query_db, page_object.dict_type)
                     await request.app.state.redis.set(
                         f'{RedisInitKeyConfig.SYS_DICT.key}:{page_object.dict_type}',
-                        json.dumps(
-                            SqlalchemyUtil.serialize_result(dict_data_list), ensure_ascii=False, default=str
-                        ),
+                        json.dumps(SqlalchemyUtil.serialize_result(dict_data_list), ensure_ascii=False, default=str),
                     )
                     return CrudResponseModel(is_success=True, message='更新成功')
                 except Exception as e:
@@ -400,9 +392,7 @@ class DictDataService:
                     dict_data_list = await cls.query_dict_data_list_services(query_db, dict_type)
                     await request.app.state.redis.set(
                         f'{RedisInitKeyConfig.SYS_DICT.key}:{dict_type}',
-                        json.dumps(
-                            SqlalchemyUtil.serialize_result(dict_data_list), ensure_ascii=False, default=str
-                        ),
+                        json.dumps(SqlalchemyUtil.serialize_result(dict_data_list), ensure_ascii=False, default=str),
                     )
                 return CrudResponseModel(is_success=True, message='删除成功')
             except Exception as e:
@@ -454,9 +444,7 @@ class DictDataService:
             'remark': '备注',
         }
 
-        data = dict_data_list
-
-        for item in data:
+        for item in dict_data_list:
             if item.get('status') == '0':
                 item['status'] = '正常'
             else:
@@ -465,9 +453,6 @@ class DictDataService:
                 item['is_default'] = '是'
             else:
                 item['is_default'] = '否'
-        new_data = [
-            {mapping_dict.get(key): value for key, value in item.items() if mapping_dict.get(key)} for item in data
-        ]
-        binary_data = export_list2excel(new_data)
+        binary_data = ExcelUtil.export_list2excel(dict_data_list, mapping_dict)
 
         return binary_data
