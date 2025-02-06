@@ -1,4 +1,5 @@
 import feffery_antd_components as fac
+import feffery_utils_components as fuc
 from dash import dcc, html
 from api.monitor.cache import CacheApi
 from callbacks.monitor_c.cache_c import control_c  # noqa: F401
@@ -20,12 +21,7 @@ def render(*args, **kwargs):
             ),
         ),
         dcc.Store(id='echarts-data-container'),
-        dcc.Interval(
-            id='init-echarts-interval',
-            n_intervals=0,
-            interval=500,
-            disabled=False,
-        ),
+        fuc.FefferyTimeout(id='init-echarts-timeout', delay=500),
         html.Div(
             [
                 fac.AntdRow(
@@ -88,7 +84,7 @@ def render(*args, **kwargs):
                                                 db_size, label='Key数量'
                                             ),
                                             fac.AntdDescriptionItem(
-                                                f"{info.get('instantaneous_input_kbps')}kps/{info.get('instantaneous_output_kbps')}kps",
+                                                f'{info.get("instantaneous_input_kbps")}kps/{info.get("instantaneous_output_kbps")}kps',
                                                 label='网络入口/出口',
                                             ),
                                         ],

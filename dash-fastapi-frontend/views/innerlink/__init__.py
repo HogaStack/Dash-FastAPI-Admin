@@ -1,4 +1,4 @@
-from dash import dcc, html
+from dash import html
 import feffery_utils_components as fuc
 from callbacks import innnerlink_c  # noqa: F401
 
@@ -7,12 +7,7 @@ def render(*args, **kwargs):
     return [
         html.Div(
             [
-                dcc.Interval(
-                    id='init-iframe-interval',
-                    n_intervals=0,
-                    interval=500,
-                    disabled=False,
-                ),
+                fuc.FefferyTimeout(id='init-iframe-timeout', delay=500),
                 fuc.FefferyStyle(
                     rawStyle="""
                     iframe {
