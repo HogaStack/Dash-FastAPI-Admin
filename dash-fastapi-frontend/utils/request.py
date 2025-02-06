@@ -18,6 +18,7 @@ from utils.log_util import logger
 def api_request(
     url: str,
     method: ApiMethod,
+    base_url: Optional[str] = ApiConfig.BaseUrl,
     headers: Optional[Dict] = {},
     params: Optional[Dict] = None,
     data: Optional[Dict] = None,
@@ -31,6 +32,7 @@ def api_request(
 
     :param url: 请求url
     :param method: 请求方法
+    :param base_url: 请求url前缀
     :param headers: 请求头
     :param params: 查询参数
     :param data: 表单参数
@@ -40,7 +42,7 @@ def api_request(
     :param stream: 是否为流式请求
     :return: 请求结果
     """
-    api_url = ApiConfig.BaseUrl + url
+    api_url = base_url + url
     api_method = method.value
     user_agent = request.headers.get('User-Agent')
     authorization = (
