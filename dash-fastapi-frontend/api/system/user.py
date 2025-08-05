@@ -188,7 +188,7 @@ class UserApi:
         return api_request(
             url='/system/user/profile/updatePwd',
             method=ApiMethod.PUT,
-            params=dict(old_password=old_password, new_password=new_password),
+            data=dict(old_password=old_password, new_password=new_password),
         )
 
     @classmethod
