@@ -49,15 +49,14 @@ class PermissionManager:
             if CacheManager.get('permissions')
             else []
         )
-        user_role_key_list = [role.role_key for role in user_role_list]
         if isinstance(role_key, str):
-            if role_key in user_role_key_list:
+            if role_key in user_role_list:
                 return True
         if isinstance(role_key, list):
             if is_strict:
                 if all(
                     [
-                        role_key_str in user_role_key_list
+                        role_key_str in user_role_list
                         for role_key_str in role_key
                     ]
                 ):
@@ -65,7 +64,7 @@ class PermissionManager:
             else:
                 if any(
                     [
-                        role_key_str in user_role_key_list
+                        role_key_str in user_role_list
                         for role_key_str in role_key
                     ]
                 ):
