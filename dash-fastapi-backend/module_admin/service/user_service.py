@@ -496,6 +496,7 @@ class UserService:
         }
 
         for item in user_list:
+            item['dept_name'] = item.get('dept').get('dept_name')
             if item.get('status') == '0':
                 item['status'] = '正常'
             else:
