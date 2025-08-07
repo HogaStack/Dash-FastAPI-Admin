@@ -31,7 +31,7 @@ app.clientside_callback(
                 true
             ]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
      }
     """,
     [
@@ -88,7 +88,7 @@ app.clientside_callback(
                 return custom_color;
             }
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     Output('hex-color-picker', 'color', allow_duplicate=True),

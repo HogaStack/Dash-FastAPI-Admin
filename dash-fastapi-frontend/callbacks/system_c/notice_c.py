@@ -63,7 +63,6 @@ def generate_notice_table(query_params: Dict):
         notice_table_pagination=Output(
             'notice-list-table', 'pagination', allow_duplicate=True
         ),
-        notice_table_key=Output('notice-list-table', 'key'),
         notice_table_selectedrowkeys=Output(
             'notice-list-table', 'selectedRowKeys'
         ),
@@ -124,7 +123,6 @@ def get_notice_table_data(
         return dict(
             notice_table_data=table_data,
             notice_table_pagination=table_pagination,
-            notice_table_key=str(uuid.uuid4()),
             notice_table_selectedrowkeys=None,
         )
 
@@ -138,7 +136,7 @@ app.clientside_callback(
         if (reset_click) {
             return [null, null, null, null, {'type': 'reset'}]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -163,7 +161,7 @@ app.clientside_callback(
                 hidden_status ? '隐藏搜索' : '显示搜索'
             ]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [

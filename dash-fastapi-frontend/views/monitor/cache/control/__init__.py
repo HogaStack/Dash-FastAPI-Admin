@@ -90,9 +90,11 @@ def render(*args, **kwargs):
                                         ],
                                         bordered=True,
                                         column=4,
-                                        labelStyle={
-                                            'fontWeight': 600,
-                                            'textAlign': 'center',
+                                        styles={
+                                            'label': {
+                                                'fontWeight': 600,
+                                                'textAlign': 'center',
+                                            }
                                         },
                                         style={
                                             'width': '100%',

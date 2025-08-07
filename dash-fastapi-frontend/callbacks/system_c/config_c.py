@@ -1,5 +1,4 @@
 import time
-import uuid
 from dash import ctx, dcc, no_update
 from dash.dependencies import ALL, Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -59,7 +58,6 @@ def generate_config_table(query_params: Dict):
         config_table_pagination=Output(
             'config-list-table', 'pagination', allow_duplicate=True
         ),
-        config_table_key=Output('config-list-table', 'key'),
         config_table_selectedrowkeys=Output(
             'config-list-table', 'selectedRowKeys'
         ),
@@ -120,7 +118,6 @@ def get_config_table_data(
         return dict(
             config_table_data=table_data,
             config_table_pagination=table_pagination,
-            config_table_key=str(uuid.uuid4()),
             config_table_selectedrowkeys=None,
         )
 
@@ -134,7 +131,7 @@ app.clientside_callback(
         if (reset_click) {
             return [null, null, null, null, {'type': 'reset'}]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -159,7 +156,7 @@ app.clientside_callback(
                 hidden_status ? '隐藏搜索' : '显示搜索'
             ]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [

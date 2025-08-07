@@ -1,7 +1,7 @@
 import feffery_antd_components as fac
 from dash import dcc, html
 from api.system.user import UserApi
-from callbacks.system_c.user_c import user_c
+from callbacks.system_c.user_c import user_c  # noqa: F401
 from components import ManuallyUpload
 from components.ApiRadioGroup import ApiRadioGroup
 from components.ApiSelect import ApiSelect
@@ -10,8 +10,6 @@ from . import allocate_role, profile  # noqa: F401
 
 
 def render(*args, **kwargs):
-    query_params = dict(page_num=1, page_size=10)
-    table_data, table_pagination = user_c.generate_user_table(query_params)
     tree_info = UserApi.dept_tree_select()
     tree_data = tree_info['data']
 
@@ -307,7 +305,7 @@ def render(*args, **kwargs):
                                     fac.AntdSpin(
                                         fac.AntdTable(
                                             id='user-list-table',
-                                            data=table_data,
+                                            data=[],
                                             columns=[
                                                 {
                                                     'dataIndex': 'user_id',
@@ -374,7 +372,19 @@ def render(*args, **kwargs):
                                             rowSelectionType='checkbox',
                                             rowSelectionWidth=50,
                                             bordered=True,
-                                            pagination=table_pagination,
+                                            pagination={
+                                                'pageSize': 10,
+                                                'current': 1,
+                                                'showSizeChanger': True,
+                                                'pageSizeOptions': [
+                                                    10,
+                                                    30,
+                                                    50,
+                                                    100,
+                                                ],
+                                                'showQuickJumper': True,
+                                                'total': 0,
+                                            },
                                             mode='server-side',
                                             style={
                                                 'width': '100%',

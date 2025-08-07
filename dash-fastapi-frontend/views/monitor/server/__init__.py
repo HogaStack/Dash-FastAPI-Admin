@@ -154,7 +154,7 @@ def render(*args, **kwargs):
                                         ],
                                         bordered=True,
                                         column=2,
-                                        labelStyle={'textAlign': 'center'},
+                                        styles={'label': {'textAlign': 'center'}},
                                         style={
                                             'width': '100%',
                                             'textAlign': 'center',
@@ -216,7 +216,7 @@ def render(*args, **kwargs):
                                         ],
                                         bordered=True,
                                         column=2,
-                                        labelStyle={'textAlign': 'center'},
+                                        styles={'label': {'textAlign': 'center'}},
                                         style={
                                             'width': '100%',
                                             'textAlign': 'center',

@@ -1,13 +1,10 @@
 import feffery_antd_components as fac
 from dash import dcc, html
-from callbacks.monitor_c import online_c
+from callbacks.monitor_c import online_c  # noqa: F401
 from utils.permission_util import PermissionManager
 
 
 def render(*args, **kwargs):
-    query_params = dict(page_num=1, page_size=10)
-    table_data, table_pagination = online_c.generate_online_table(query_params)
-
     return [
         # 在线用户模块操作类型存储容器
         dcc.Store(id='online-operations-store'),
@@ -167,7 +164,7 @@ def render(*args, **kwargs):
                                     fac.AntdSpin(
                                         fac.AntdTable(
                                             id='online-list-table',
-                                            data=table_data,
+                                            data=[],
                                             columns=[
                                                 {
                                                     'dataIndex': 'token_id',
@@ -237,7 +234,19 @@ def render(*args, **kwargs):
                                             rowSelectionType='checkbox',
                                             rowSelectionWidth=50,
                                             bordered=True,
-                                            pagination=table_pagination,
+                                            pagination={
+                                                'pageSize': 10,
+                                                'current': 1,
+                                                'showSizeChanger': True,
+                                                'pageSizeOptions': [
+                                                    10,
+                                                    30,
+                                                    50,
+                                                    100,
+                                                ],
+                                                'showQuickJumper': True,
+                                                'total': 0,
+                                            },
                                             mode='server-side',
                                             style={
                                                 'width': '100%',

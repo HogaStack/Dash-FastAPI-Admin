@@ -1,4 +1,3 @@
-import uuid
 from dash import ctx, no_update
 from dash.dependencies import ALL, Input, MATCH, Output, State
 from dash.exceptions import PreventUpdate
@@ -21,7 +20,6 @@ from utils.time_format_util import TimeFormatUtil
             'pagination',
             allow_duplicate=True,
         ),
-        Output({'type': 'allocate_user-list-table', 'index': MATCH}, 'key'),
         Output(
             {'type': 'allocate_user-list-table', 'index': MATCH},
             'selectedRowKeys',
@@ -112,7 +110,7 @@ def get_allocate_user_table_data(
                     else {},
                 ]
 
-        return [table_data, table_pagination, str(uuid.uuid4()), None]
+        return [table_data, table_pagination, None]
 
     raise PreventUpdate
 
@@ -124,7 +122,7 @@ app.clientside_callback(
         if (reset_click) {
             return [null, null, {'type': 'reset'}]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -154,7 +152,7 @@ app.clientside_callback(
                 hidden_status ? '隐藏搜索' : '显示搜索'
             ]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [

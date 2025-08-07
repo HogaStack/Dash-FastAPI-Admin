@@ -1,16 +1,11 @@
 import feffery_antd_components as fac
 from dash import dcc, html
-from callbacks.monitor_c import operlog_c
+from callbacks.monitor_c import operlog_c  # noqa: F401
 from components.ApiSelect import ApiSelect
 from utils.permission_util import PermissionManager
 
 
 def render(*args, **kwargs):
-    query_params = dict(page_num=1, page_size=10)
-    table_data, table_pagination = operlog_c.generate_operlog_table(
-        query_params
-    )
-
     return [
         # 用于导出成功后重置dcc.Download的状态，防止多次下载文件
         dcc.Store(id='operation_log-export-complete-judge-container'),
@@ -257,7 +252,7 @@ def render(*args, **kwargs):
                                     fac.AntdSpin(
                                         fac.AntdTable(
                                             id='operation_log-list-table',
-                                            data=table_data,
+                                            data=[],
                                             columns=[
                                                 {
                                                     'dataIndex': 'oper_id',
@@ -341,7 +336,19 @@ def render(*args, **kwargs):
                                                 ],
                                                 'multiple': False,
                                             },
-                                            pagination=table_pagination,
+                                            pagination={
+                                                'pageSize': 10,
+                                                'current': 1,
+                                                'showSizeChanger': True,
+                                                'pageSizeOptions': [
+                                                    10,
+                                                    30,
+                                                    50,
+                                                    100,
+                                                ],
+                                                'showQuickJumper': True,
+                                                'total': 0,
+                                            },
                                             mode='server-side',
                                             style={
                                                 'width': '100%',

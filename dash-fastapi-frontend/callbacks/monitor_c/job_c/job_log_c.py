@@ -1,5 +1,4 @@
 import time
-import uuid
 from dash import ctx, dcc
 from dash.dependencies import ALL, Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -19,7 +18,6 @@ from utils.time_format_util import TimeFormatUtil
         job_log_table_pagination=Output(
             'job_log-list-table', 'pagination', allow_duplicate=True
         ),
-        job_log_table_key=Output('job_log-list-table', 'key'),
         job_log_table_selectedrowkeys=Output(
             'job_log-list-table', 'selectedRowKeys'
         ),
@@ -105,7 +103,6 @@ def get_job_log_table_data(
         return dict(
             job_log_table_data=table_data,
             job_log_table_pagination=table_pagination,
-            job_log_table_key=str(uuid.uuid4()),
             job_log_table_selectedrowkeys=None,
         )
 
@@ -119,7 +116,7 @@ app.clientside_callback(
         if (reset_click) {
             return [null, null, null, null, {'type': 'reset'}]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -144,7 +141,7 @@ app.clientside_callback(
                 hidden_status ? '隐藏搜索' : '显示搜索'
             ]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [

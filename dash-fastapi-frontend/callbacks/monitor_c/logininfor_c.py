@@ -1,5 +1,4 @@
 import time
-import uuid
 from dash import ctx, dcc, no_update
 from dash.dependencies import Input, Output, State, ALL
 from dash.exceptions import PreventUpdate
@@ -46,7 +45,6 @@ def generate_logininfor_table(query_params: Dict):
         login_log_table_pagination=Output(
             'login_log-list-table', 'pagination', allow_duplicate=True
         ),
-        login_log_table_key=Output('login_log-list-table', 'key'),
         login_log_table_selectedrowkeys=Output(
             'login_log-list-table', 'selectedRowKeys'
         ),
@@ -93,7 +91,7 @@ def get_login_log_table_data(
         begin_time=begin_time,
         end_time=end_time,
         order_by_column=sorter.get('columns')[0] if sorter else None,
-        is_asc=f"{sorter.get('orders')[0]}ing" if sorter else None,
+        is_asc=f'{sorter.get("orders")[0]}ing' if sorter else None,
         page_num=1,
         page_size=10,
     )
@@ -110,7 +108,6 @@ def get_login_log_table_data(
         return dict(
             login_log_table_data=table_data,
             login_log_table_pagination=table_pagination,
-            login_log_table_key=str(uuid.uuid4()),
             login_log_table_selectedrowkeys=None,
         )
 
@@ -124,7 +121,7 @@ app.clientside_callback(
         if (reset_click) {
             return [null, null, null, null, {'type': 'reset'}]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -149,7 +146,7 @@ app.clientside_callback(
                 hidden_status ? '隐藏搜索' : '显示搜索'
             ]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -301,7 +298,7 @@ def export_login_log_list(
             begin_time=begin_time,
             end_time=end_time,
             order_by_column=sorter.get('columns')[0] if sorter else None,
-            is_asc=f"{sorter.get('orders')[0]}ing" if sorter else None,
+            is_asc=f'{sorter.get("orders")[0]}ing' if sorter else None,
         )
         export_login_log_res = LogininforApi.export_logininfor(export_params)
         export_login_log = export_login_log_res.content

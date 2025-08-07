@@ -1,5 +1,4 @@
 import time
-import uuid
 from dash import ctx, dcc, no_update
 from dash.dependencies import ALL, Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -57,7 +56,6 @@ def generate_post_table(query_params: Dict):
         post_table_pagination=Output(
             'post-list-table', 'pagination', allow_duplicate=True
         ),
-        post_table_key=Output('post-list-table', 'key'),
         post_table_selectedrowkeys=Output('post-list-table', 'selectedRowKeys'),
     ),
     inputs=dict(
@@ -106,7 +104,6 @@ def get_post_table_data(
         return dict(
             post_table_data=table_data,
             post_table_pagination=table_pagination,
-            post_table_key=str(uuid.uuid4()),
             post_table_selectedrowkeys=None,
         )
 
@@ -120,7 +117,7 @@ app.clientside_callback(
         if (reset_click) {
             return [null, null, null, {'type': 'reset'}]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -144,7 +141,7 @@ app.clientside_callback(
                 hidden_status ? '隐藏搜索' : '显示搜索'
             ]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [

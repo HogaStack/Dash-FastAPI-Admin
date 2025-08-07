@@ -87,7 +87,7 @@ def render():
                                                                                 icon='antd-check-circle'
                                                                             ),
                                                                         ),
-                                                                        html.Div(
+                                                                        fuc.FefferyDiv(
                                                                             [
                                                                                 fac.AntdImage(
                                                                                     id='login-captcha-image',
@@ -119,7 +119,7 @@ def render():
                                                                     id='login-remember-me',
                                                                     label='记住我',
                                                                 ),
-                                                                html.Div(
+                                                                fuc.FefferyDiv(
                                                                     id='forget-password-link-container'
                                                                 ),
                                                             ],
@@ -143,7 +143,7 @@ def render():
                                                         },
                                                     ),
                                                     fac.AntdFormItem(
-                                                        html.Div(
+                                                        fuc.FefferyDiv(
                                                             id='register-user-link-container',
                                                         ),
                                                     ),
@@ -187,6 +187,10 @@ def render():
                 ],
                 id='login-page',
                 className='acss-trkbkn',
+            ),
+            fuc.FefferyTimeout(
+                id='login-timeout',
+                delay=500,
             ),
             fuc.FefferyStyle(
                 rawStyle="""

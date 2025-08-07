@@ -215,9 +215,11 @@ def render_page_bottom():
                                 ],
                                 className='project-list',
                                 title='进行中的项目',
-                                bordered=False,
+                                variant='borderless',
                                 extraLink={'content': '全部项目'},
-                                bodyStyle={'padding': 0},
+                                styles={
+                                    'body': {'padding': 0}
+                                },
                                 style={
                                     'marginBottom': '24px',
                                     'boxShadow': 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
@@ -313,7 +315,7 @@ def render_page_bottom():
                                     },
                                 ),
                                 title='动态',
-                                bordered=False,
+                                variant='borderless',
                                 style={
                                     'marginBottom': '24px',
                                     'boxShadow': 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
@@ -347,7 +349,7 @@ def render_page_bottom():
                                     className='item-group',
                                 ),
                                 title='快速开始 / 便捷导航',
-                                bordered=False,
+                                variant='borderless',
                                 style={
                                     'marginBottom': '24px',
                                     'boxShadow': 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
@@ -371,8 +373,10 @@ def render_page_bottom():
                                     },
                                 ),
                                 title='XX 指数',
-                                bordered=False,
-                                bodyStyle={'padding': 0},
+                                variant='borderless',
+                                styles={
+                                    'body': {'padding': 0}
+                                },
                                 style={
                                     'marginBottom': '24px',
                                     'boxShadow': 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
@@ -406,7 +410,7 @@ def render_page_bottom():
                                     className='members',
                                 ),
                                 title='团队',
-                                bordered=False,
+                                variant='borderless',
                                 style={
                                     'marginBottom': '24px',
                                     'boxShadow': 'rgba(0, 0, 0, 0.1) 0px 4px 12px',

@@ -42,7 +42,7 @@ from utils.feedback_util import MessageManager
     running=[
         [Output('login-submit', 'loading'), True, False],
         [Output('login-submit', 'children'), '登录中', '登录'],
-        [Output('login-captcha-image-container', 'n_clicks'), 0, 1],
+        [Output('login-captcha-image-container', 'nClicks'), 0, 1],
     ],
     prevent_initial_call=True,
 )
@@ -130,7 +130,7 @@ def login_auth(
         Output('login-captcha-image', 'src'),
         Output('captcha_image-session_id-container', 'data'),
     ],
-    Input('login-captcha-image-container', 'n_clicks'),
+    Input('login-captcha-image-container', 'nClicks'),
     State('login-success-container', 'data'),
     prevent_initial_call=True,
 )
@@ -140,7 +140,7 @@ def change_login_captcha_image(captcha_click, login_success):
         captcha_enabled = captcha_image_info.get('captcha_enabled')
         forget_enabled = captcha_image_info.get('forget_enabled')
         register_enabled = captcha_image_info.get('register_enabled')
-        captcha_image = f"data:image/gif;base64,{captcha_image_info.get('img')}"
+        captcha_image = f'data:image/gif;base64,{captcha_image_info.get("img")}'
         session_id = captcha_image_info.get('uuid')
 
         return [
@@ -202,7 +202,7 @@ app.clientside_callback(
         Output('login-username', 'value'),
         Output('login-password', 'value'),
     ],
-    Input('login-page', 'id'),
+    Input('login-timeout', 'timeoutCount'),
 )
 
 

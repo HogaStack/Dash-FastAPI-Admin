@@ -1,5 +1,4 @@
 import time
-import uuid
 from dash import ctx, dcc
 from dash.dependencies import Input, Output, State, ALL
 from dash.exceptions import PreventUpdate
@@ -42,7 +41,7 @@ def generate_operlog_table(query_params: Dict):
                 item.get('oper_time')
             )
             item['key'] = str(item['oper_id'])
-            item['cost_time'] = f"{item['cost_time']}毫秒"
+            item['cost_time'] = f'{item["cost_time"]}毫秒'
             item['operation'] = [
                 {'content': '详情', 'type': 'link', 'icon': 'antd-eye'}
                 if PermissionManager.check_perms('monitor:operlog:query')
@@ -60,7 +59,6 @@ def generate_operlog_table(query_params: Dict):
         operation_log_table_pagination=Output(
             'operation_log-list-table', 'pagination', allow_duplicate=True
         ),
-        operation_log_table_key=Output('operation_log-list-table', 'key'),
         operation_log_table_selectedrowkeys=Output(
             'operation_log-list-table', 'selectedRowKeys'
         ),
@@ -110,7 +108,7 @@ def get_operation_log_table_data(
         begin_time=begin_time,
         end_time=end_time,
         order_by_column=sorter.get('columns')[0] if sorter else None,
-        is_asc=f"{sorter.get('orders')[0]}ing" if sorter else None,
+        is_asc=f'{sorter.get("orders")[0]}ing' if sorter else None,
         page_num=1,
         page_size=10,
     )
@@ -127,7 +125,6 @@ def get_operation_log_table_data(
         return dict(
             operation_log_table_data=table_data,
             operation_log_table_pagination=table_pagination,
-            operation_log_table_key=str(uuid.uuid4()),
             operation_log_table_selectedrowkeys=None,
         )
 
@@ -141,7 +138,7 @@ app.clientside_callback(
         if (reset_click) {
             return [null, null, null, null, null, {'type': 'reset'}]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -167,7 +164,7 @@ app.clientside_callback(
                 hidden_status ? '隐藏搜索' : '显示搜索'
             ]
         }
-        return window.dash_clientside.no_update;
+        throw window.dash_clientside.PreventUpdate;
     }
     """,
     [
@@ -370,7 +367,7 @@ def export_operation_log_list(
             begin_time=begin_time,
             end_time=end_time,
             order_by_column=sorter.get('columns')[0] if sorter else None,
-            is_asc=f"{sorter.get('orders')[0]}ing" if sorter else None,
+            is_asc=f'{sorter.get("orders")[0]}ing' if sorter else None,
         )
         export_operation_log_res = OperlogApi.export_operlog(export_params)
         export_operation_log = export_operation_log_res.content

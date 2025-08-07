@@ -2,7 +2,7 @@ import feffery_antd_components as fac
 import feffery_utils_components as fuc
 from dash import dcc, html
 from flask import session
-from callbacks.system_c import notice_c
+from callbacks.system_c import notice_c  # noqa: F401
 from components.ApiRadioGroup import ApiRadioGroup
 from components.ApiSelect import ApiSelect
 from config.env import ApiConfig
@@ -10,9 +10,6 @@ from utils.permission_util import PermissionManager
 
 
 def render(*args, **kwargs):
-    query_params = dict(page_num=1, page_size=10)
-    table_data, table_pagination = notice_c.generate_notice_table(query_params)
-
     return [
         # 通知公告管理模块操作类型存储容器
         dcc.Store(id='notice-operations-store'),
@@ -249,7 +246,7 @@ def render(*args, **kwargs):
                                     fac.AntdSpin(
                                         fac.AntdTable(
                                             id='notice-list-table',
-                                            data=table_data,
+                                            data=[],
                                             columns=[
                                                 {
                                                     'dataIndex': 'notice_id',
@@ -305,7 +302,19 @@ def render(*args, **kwargs):
                                             rowSelectionType='checkbox',
                                             rowSelectionWidth=50,
                                             bordered=True,
-                                            pagination=table_pagination,
+                                            pagination={
+                                                'pageSize': 10,
+                                                'current': 1,
+                                                'showSizeChanger': True,
+                                                'pageSizeOptions': [
+                                                    10,
+                                                    30,
+                                                    50,
+                                                    100,
+                                                ],
+                                                'showQuickJumper': True,
+                                                'total': 0,
+                                            },
                                             mode='server-side',
                                             style={
                                                 'width': '100%',

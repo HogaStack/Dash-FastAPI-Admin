@@ -104,10 +104,12 @@ def render():
                     'target': '_self',
                     'style': {'fontSize': '16px'},
                 },
-                headStyle={
-                    'fontWeight': 'bold',
-                    'textAlign': 'center',
-                    'fontSize': '30px',
+                styles={
+                    'header': {
+                        'fontWeight': 'bold',
+                        'textAlign': 'center',
+                        'fontSize': '30px',
+                    }
                 },
                 style={
                     'position': 'fixed',
