@@ -26,20 +26,20 @@ def redirect_page(okCounts):
 
 
 # 应用初始化主题颜色
-@app.callback(
-    Output('system-app-primary-color-container', 'data'),
-    Input('app-mount', 'id'),
-    State('custom-app-primary-color-container', 'data'),
-)
-def get_primary_color(_, custom_color):
-    # if not custom_color:
-    #     primary_color_res = query_config_list_api(config_key='sys.index.skinName')
-    #     if primary_color_res.get('code') == 200:
-    #         primary_color = primary_color_res.get('data')
+# @app.callback(
+#     Output('system-app-primary-color-container', 'data'),
+#     Input('app-mount', 'id'),
+#     State('custom-app-primary-color-container', 'data'),
+# )
+# def get_primary_color(_, custom_color):
+#     if not custom_color:
+#         primary_color_res = query_config_list_api(config_key='sys.index.skinName')
+#         if primary_color_res.get('code') == 200:
+#             primary_color = primary_color_res.get('data')
 
-    #         return primary_color
+#             return primary_color
 
-    raise PreventUpdate
+#     raise PreventUpdate
 
 
 app.clientside_callback(

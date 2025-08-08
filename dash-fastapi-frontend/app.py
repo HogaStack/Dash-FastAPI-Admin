@@ -13,10 +13,11 @@ app.layout = html.Div(
         fuc.FefferyLocation(id='url-container'),
         # 用于回调pathname信息
         dcc.Location(id='dcc-url', refresh=False),
-        # 注入页面内容挂载点
-        html.Div(id='app-mount'),
-        # 注入全局配置容器
-        fac.AntdConfigProvider(id='app-config-provider'),
+        # 注入全局配置容器和页面内容挂载点
+        fac.AntdConfigProvider(
+            html.Div(id='app-mount'),
+            id='app-config-provider',
+        ),
         # 注入快捷搜索面板
         fuc.FefferyShortcutPanel(
             id='search-panel',

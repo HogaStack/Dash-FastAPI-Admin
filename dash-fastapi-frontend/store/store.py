@@ -5,7 +5,7 @@ def render_store_container():
     return html.Div(
         [
             # 应用主题颜色存储容器
-            dcc.Store(id='system-app-primary-color-container', data='#1890ff'),
+            dcc.Store(id='system-app-primary-color-container', data='#1677ff'),
             dcc.Store(
                 id='custom-app-primary-color-container', storage_type='session'
             ),

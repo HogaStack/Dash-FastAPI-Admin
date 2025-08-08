@@ -1,4 +1,3 @@
-import feffery_utils_components as fuc
 from dash import ctx, dcc, no_update
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -6,6 +5,7 @@ from flask import session
 from api.login import LoginApi
 from server import app
 from utils.cache_util import CacheManager
+from utils.feedback_util import MessageManager
 
 
 # 页首右侧个人中心选项卡回调
@@ -115,7 +115,6 @@ def show_selected_color(pick_color, old_style):
     [
         Output('custom-app-primary-color-container', 'data'),
         Output('hex-color-picker', 'color', allow_duplicate=True),
-        Output('global-message-container', 'children', allow_duplicate=True),
     ],
     [Input('save-setting', 'nClicks'), Input('reset-setting', 'nClicks')],
     [
@@ -130,17 +129,11 @@ def save_rest_layout_setting(
     if save_click or reset_click:
         trigger_id = ctx.triggered_id
         if trigger_id == 'save-setting':
-            return [
-                picked_color,
-                no_update,
-                fuc.FefferyFancyMessage('保存成功', type='success'),
-            ]
+            MessageManager.success(content='保存成功')
+            return [picked_color, no_update]
 
         elif trigger_id == 'reset-setting':
-            return [
-                None,
-                system_color,
-                fuc.FefferyFancyMessage('重置成功', type='success'),
-            ]
+            MessageManager.success(content='重置成功')
+            return [None, system_color]
 
     raise PreventUpdate
